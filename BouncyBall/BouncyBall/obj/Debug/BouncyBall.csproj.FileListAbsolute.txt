@@ -1,1 +1,9 @@
 C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\bin\Debug\BouncyBall.exe.config
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\bin\Debug\BouncyBall.exe
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\bin\Debug\BouncyBall.pdb
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\obj\Debug\BouncyBall.csprojResolveAssemblyReference.cache
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\obj\Debug\BouncyBall.Properties.Resources.resources
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\obj\Debug\BouncyBall.csproj.GenerateResource.Cache
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\obj\Debug\BouncyBall.exe
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\obj\Debug\BouncyBall.pdb
+C:\Users\Reid\Documents\GitHub\BouncyBall\BouncyBall\BouncyBall\obj\Debug\BouncyBall.GameForm.resources
