@@ -12,15 +12,20 @@ namespace BouncyBall
 {
     public partial class GameForm : Form
     {
+        //TODO: Set these variables in Ball class rather than in-form.
         int newLocationX = 0;
         int newLocationY = 0;
 
         int BallXMomentum = 0;
         int BallYMomentum = 0;
-        int RollCounter = 0; //Cycles 0-5 and will only slow ball down on 0.
+        int RollCounter = 0; //Cycles 0-30 and will only slow ball down on 0.
 
-        int _physWidth = 16;
-        int _physHeight = 25;
+        //These are needed for border hit detection.
+        const int _physWidth = 16; 
+        const int _physHeight = 39; //TODO: Research why these aren't the same (They should just be an even 50).
+
+        List<PictureBox> ObstacleList = new List<PictureBox>() { /*Put your stuff here */};
+        List<PictureBox> BallList = new List<PictureBox>();
 
         public GameForm()
         {
@@ -36,37 +41,8 @@ namespace BouncyBall
             if (newLocationY != this.Location.Y)
                 Ball.Top -= this.Location.Y - newLocationY;
 
-            //Bounce ball if applicable
-            //Ball at top
-            if (Ball.Top < 0)
-            {
-                BallYMomentum += this.Location.Y - newLocationY; //Greater momentum on greater movement.
-                Ball.Top = 0;
-            }
+            BoarderMovementPhysics(); //Bounce ball off boarder if applicable
 
-            //Ball at left
-            if (Ball.Left < 0)
-            {
-                BallXMomentum += this.Location.X - newLocationX;
-                Ball.Left = 0;
-            }
-
-            //Ball at right
-            if (Ball.Left > (this.Width - (Ball.Width + _physWidth)))
-            {
-                BallXMomentum += this.Location.X - newLocationX;
-                Ball.Left = this.Width - (Ball.Width + _physWidth);
-            }
-
-            //Ball at bottom.
-            if (Ball.Top > (this.Height - (int)(Ball.Height * 1.78)))
-            {
-
-                BallYMomentum += this.Location.Y - newLocationY;
-                BallXMomentum += (this.Location.X - newLocationX) / 20;
-                Ball.Top =(this.Height - (int)(Ball.Height * 1.78));
-            }
-  
             newLocationX = this.Location.X;
             newLocationY = this.Location.Y;
         }
@@ -86,25 +62,43 @@ namespace BouncyBall
                     BallXMomentum++;
             }
         }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
             BallYMomentum++; //"Gravity." A greater momentum drags the ball downward.
 
             Ball.Top += BallYMomentum;
             Ball.Left += BallXMomentum;
 
+            BoarderIdlePhysics();
+            foreach (PictureBox i in ObstacleList)
+            {
+                ObstacleIdlePhysics(i);
+            }
+        }
+
+        private void GameForm_Load(object sender, EventArgs e)
+        {
+            newLocationX = this.Location.X;
+            newLocationY = this.Location.Y;
+
+            ObstacleList.Add(obstacle1); //Add all obstacle objects.
+            BallList.Add(Ball); //Add all ball objects.
+        }
+
+        private void BoarderIdlePhysics()
+        {
             //Reverse momentum when ball hits the ground.
-            if (!(Ball.Top < this.Height - (int)(Ball.Height * 1.78)))
+            if (!(Ball.Top < this.Height - (Ball.Height + _physHeight)))
             {
                 BallYMomentum = (int)(BallYMomentum / 1.5);
                 BallYMomentum = -BallYMomentum;
-                 SlowBallX();
+                SlowBallX();
             }
 
-            if (!(Ball.Top < this.Height - (int)(Ball.Height * 1.78)))
+            if (!(Ball.Top < this.Height - (Ball.Height + _physHeight)))
             {
-                Ball.Top = this.Height - (int)(Ball.Height * 1.78);
+                Ball.Top = this.Height - (Ball.Height + _physHeight);
             }
 
             //Reverse momentum when ball hits the ceiling.
@@ -112,7 +106,7 @@ namespace BouncyBall
             {
                 BallYMomentum = (int)(BallYMomentum / 1.5);
                 BallYMomentum = -BallYMomentum;
-                SlowBallX();    
+                SlowBallX();
             }
 
             if (!(Ball.Top > 0))
@@ -143,18 +137,81 @@ namespace BouncyBall
             {
                 Ball.Left = this.Width - (Ball.Width + _physWidth);
             }
-           
+
         }
 
-        private void GameForm_Load(object sender, EventArgs e)
+        private void BoarderMovementPhysics()
         {
-            newLocationX = this.Location.X;
-            newLocationY = this.Location.Y;
+            //Ball at top
+            if (Ball.Top < 0)
+            {
+                BallYMomentum += this.Location.Y - newLocationY; //Greater momentum on greater movement.
+                Ball.Top = 0;
+            }
+
+            //Ball at left
+            if (Ball.Left < 0)
+            {
+                BallXMomentum += this.Location.X - newLocationX;
+                Ball.Left = 0; //Prevents ball from gaining extra momentum for being in the walls for > 1 frame.
+            }
+
+            //Ball at right
+            if (Ball.Left > (this.Width - (Ball.Width + _physWidth)))
+            {
+                BallXMomentum += this.Location.X - newLocationX;
+                Ball.Left = this.Width - (Ball.Width + _physWidth);
+            }
+
+            //Ball at bottom.
+            if (Ball.Top > (this.Height - (Ball.Height + _physHeight)))
+            {
+
+                BallYMomentum += this.Location.Y - newLocationY;
+                BallXMomentum += (this.Location.X - newLocationX) / 20;
+                Ball.Top = (this.Height - (Ball.Height + _physHeight));
+            }
         }
 
-        private void GameForm_Move()
+        private void ObstacleIdlePhysics(PictureBox obstacle)
+        {
+            //Y - axis physics(Bigger obstacle)
+            //if (Ball.Width < obstacle.Width)
+            //{
+                if (Ball.Left + Ball.Width > obstacle.Left && Ball.Left < (obstacle.Left + obstacle.Width))
+                {
+                    //Ball hits top
+                    if (Ball.Top + Ball.Height > obstacle.Top)
+                    {
+                        BallYMomentum = (int)(BallYMomentum / 1.5);
+                        BallYMomentum = -BallYMomentum;
+                        SlowBallX();
+                    }
+
+                    if (Ball.Top + Ball.Height > obstacle.Top)
+                    {
+                        Ball.Top = obstacle.Top - (Ball.Height);
+                    }
+                //}
+            }
+        }
+
+        private void ObstacleMovementPhysics(PictureBox obstacle)
         {
 
+        }
+
+        /// <summary>
+        /// Reduces graphical flickering.
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;    // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
         }
     }
 }

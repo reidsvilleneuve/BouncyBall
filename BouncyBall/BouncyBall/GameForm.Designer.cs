@@ -32,7 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.Ball = new System.Windows.Forms.PictureBox();
+            this.obstacle1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.Ball)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.obstacle1)).BeginInit();
             this.SuspendLayout();
             // 
             // GameTimer
@@ -43,12 +45,24 @@
             // 
             // Ball
             // 
+            this.Ball.BackColor = System.Drawing.Color.Transparent;
+            this.Ball.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Ball.Image = ((System.Drawing.Image)(resources.GetObject("Ball.Image")));
-            this.Ball.Location = new System.Drawing.Point(264, 224);
+            this.Ball.Location = new System.Drawing.Point(189, 94);
+            this.Ball.Margin = new System.Windows.Forms.Padding(0);
             this.Ball.Name = "Ball";
             this.Ball.Size = new System.Drawing.Size(50, 50);
             this.Ball.TabIndex = 0;
             this.Ball.TabStop = false;
+            // 
+            // obstacle1
+            // 
+            this.obstacle1.BackColor = System.Drawing.Color.Yellow;
+            this.obstacle1.Location = new System.Drawing.Point(176, 290);
+            this.obstacle1.Name = "obstacle1";
+            this.obstacle1.Size = new System.Drawing.Size(79, 26);
+            this.obstacle1.TabIndex = 1;
+            this.obstacle1.TabStop = false;
             // 
             // GameForm
             // 
@@ -56,8 +70,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(569, 464);
+            this.Controls.Add(this.obstacle1);
             this.Controls.Add(this.Ball);
-            this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Location = new System.Drawing.Point(50, 50);
@@ -68,6 +82,7 @@
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.Move += new System.EventHandler(this.GameForm_Move);
             ((System.ComponentModel.ISupportInitialize)(this.Ball)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.obstacle1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -76,6 +91,7 @@
 
         private System.Windows.Forms.Timer GameTimer;
         private System.Windows.Forms.PictureBox Ball;
+        private System.Windows.Forms.PictureBox obstacle1;
     }
 }
 
