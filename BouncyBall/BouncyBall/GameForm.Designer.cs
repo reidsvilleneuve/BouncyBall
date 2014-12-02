@@ -52,7 +52,7 @@
             this.Ball.BackColor = System.Drawing.Color.Transparent;
             this.Ball.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Ball.Image = ((System.Drawing.Image)(resources.GetObject("Ball.Image")));
-            this.Ball.Location = new System.Drawing.Point(273, 149);
+            this.Ball.Location = new System.Drawing.Point(294, 185);
             this.Ball.Margin = new System.Windows.Forms.Padding(0);
             this.Ball.Name = "Ball";
             this.Ball.Size = new System.Drawing.Size(50, 50);
@@ -95,11 +95,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(569, 464);
+            this.Controls.Add(this.Ball);
             this.Controls.Add(this.obstacle3);
             this.Controls.Add(this.obstacle2);
             this.Controls.Add(this.obstacle1);
-            this.Controls.Add(this.Ball);
-            this.ForeColor = System.Drawing.Color.Black;
+            this.ForeColor = System.Drawing.Color.Transparent;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Location = new System.Drawing.Point(50, 50);
             this.MaximizeBox = false;

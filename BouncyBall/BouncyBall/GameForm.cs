@@ -22,7 +22,7 @@ namespace BouncyBall
 
         //These are needed for border hit detection.
         const int _physWidth = 16; 
-        const int _physHeight = 39; //TODO: Research why these aren't the same (They should just be an even 50).
+        const int _physHeight = 39; //TODO: Research why these aren't the same. (They should just be an even 50).
 
         List<PictureBox> ObstacleList = new List<PictureBox>();
         List<PictureBox> BallList = new List<PictureBox>();
